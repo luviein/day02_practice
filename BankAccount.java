@@ -150,11 +150,7 @@ public class BankAccount {
     }
 
     public static void main(String[] args) {
-        BankAccount myAccount = new BankAccount("Yenleng", 10000);
-        myAccount.withdraw(500);
-        myAccount.deposit(999);
-        System.out.println(myAccount);
-
-        myAccount.transactionHistory();
+        FixedDeposit fixedDeposit = new FixedDeposit("Yenleng", 200, 5, 5);
+        fixedDeposit.withdraw(10);
     }
 }
