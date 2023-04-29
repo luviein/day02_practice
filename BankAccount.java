@@ -1,7 +1,10 @@
 package com.yl;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.module.InvalidModuleDescriptorException;
@@ -168,25 +171,32 @@ public class BankAccount {
 
     }
 
-    public void transactionHistory() {
-        System.out.println("Your Transaction History:\n");
-        for (String transaction : transactions) {
-            System.out.println(transaction);
-        }
-        System.out.println("Total Balance: " + accBalance);
+    public void transactionHistory(String fileName) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = "";
+        System.out.println("Transaction History:");
 
+        while((line = br.readLine()) != null){
+            stringBuilder.append(line).append("\n");
+
+        }
+        System.out.println(stringBuilder.toString());
+        
         if (isClosed) {
             System.out.println("Account has been closed on " + formatDate);
         }
+
+        br.close();
+        
     }
 
     public void saveTransaction(String fileName) throws IOException{
-        
+        System.out.println("Transaction History is saved.");
         FileWriter fw = new FileWriter(fileName, true);
         BufferedWriter bw = new BufferedWriter(fw);
 
         int listIndex = 0;
-        bw.write("Transaction History:\n");
         while(transactions.size() > listIndex){
             bw.write(transactions.get(listIndex));
             bw.newLine();
@@ -206,10 +216,11 @@ public class BankAccount {
         
         String fileName = args[0];
         BankAccount fixedDeposit = new BankAccount("Yenleng", 1000);
-        fixedDeposit.withdraw(1000);
-        fixedDeposit.deposit(509);
+
+        fixedDeposit.clearFile(fileName);
+        fixedDeposit.deposit(5);
         fixedDeposit.saveTransaction(fileName);
-    
+        fixedDeposit.transactionHistory(fileName);
         
         //filereader save to file
         
