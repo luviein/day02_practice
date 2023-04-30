@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 /**
  * Hello world!
  *
@@ -197,11 +196,29 @@ public class BankAccount {
         BufferedWriter bw = new BufferedWriter(fw);
 
         int listIndex = 0;
-        while(transactions.size() > listIndex){
-            bw.write(transactions.get(listIndex));
-            bw.newLine();
+        bw.write("[");
+        while(transactions.size()> listIndex){
+            //to split and store variables to add in a string
+            String transaction = transactions.get(listIndex);
+            String[] transactionParts = transaction.split(" ");
+            String action = transactionParts[3];
+            String amount = transactionParts[4];
+            String date = transactionParts[6];
+            String time = transactionParts[7];
+            String transactionString ="{" + "\"action\": \"" + action + "\",\"amount\": " + amount + ",\"date\": \"" + date + "\",\"time\": \"" + time + "\"},";
+
+            //if list index = 2 is last item for list size of 3
+            if(transactions.size() -1 == listIndex){
+                transactionString = transactionString.substring(0, transactionString.length()-1);
+            }
+            
+            bw.write(transactionString);
+            //bw.write(transactions.get(listIndex));
+            //
+            //bw.newLine();
             listIndex++;
         }
+        bw.write("]");
         bw.flush();
         bw.close();
 
@@ -217,8 +234,9 @@ public class BankAccount {
         String fileName = args[0];
         BankAccount fixedDeposit = new BankAccount("Yenleng", 1000);
 
-        fixedDeposit.clearFile(fileName);
-        fixedDeposit.deposit(5);
+        //fixedDeposit.clearFile(fileName);
+        fixedDeposit.deposit(20);
+        fixedDeposit.withdraw(100);
         fixedDeposit.saveTransaction(fileName);
         fixedDeposit.transactionHistory(fileName);
         

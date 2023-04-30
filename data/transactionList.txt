@@ -1,1 +1,1 @@
-You have successfully deposit 5.0 at 30-04-2023 03:06:54
+[{"action": "deposit","amount": 20.0,"date": "30-04-2023","time": "23:05:37"},{"action": "withdrawn","amount": 100.0,"date": "30-04-2023","time": "23:05:37"}]
